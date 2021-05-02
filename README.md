@@ -13,15 +13,15 @@
 * Provides synonyms and examples of word usage where applicable.
 * Caches previously searched results to avoid unnecessary HTTP GET requests.
 
-### *Usage*
-1.  Search term to define in the textfield at top of the program.
-2.  Press "Search Term" button. Search may take up to 5 seconds to provide a response (if any).
-3.  View the results in the text area below and enjoy!
-
 ### *Installation*
 1. Download the source in the `master` branch by going to Code -> Download ZIP or use git command `git clone https://github.com/AbishananSriran/PocketDictionary` to fetch the most up-to-date source. 
 2. Download and integrate the [org.json JAR file](https://mvnrepository.com/artifact/org.json/json) into the program's dependencies.
 3. Run the program by compiling and running the Dictionary java file. (`javac Dictionary.java` + `java Dictionary`) 
+
+### *Usage*
+1.  Search term to define in the textfield at top of the program.
+2.  Press "Search Term" button. Search may take up to 5 seconds to provide a response (if any).
+3.  View the results in the text area below and enjoy!
 
 ### *TO-DO*
 * Work on more efficient methods to store data (using readable files or SQL)
