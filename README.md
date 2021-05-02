@@ -16,8 +16,8 @@
 ### *Installation*
 1. Download the source in the `master` branch by going to Code -> Download ZIP or use git command `git clone https://github.com/AbishananSriran/PocketDictionary` to fetch the most up-to-date source. 
 2. Download and integrate the [org.json JAR file](https://mvnrepository.com/artifact/org.json/json) into the program's dependencies.
-3. Run the program by compiling and running the Dictionary java file. (`javac Dictionary.java` + `java Dictionary`) 
-
+3. Run the program by compiling and running the `Dictionary.java` file. (`javac Dictionary.java` + `java Dictionary`) 
+.
 ### *Usage*
 1.  Search term to define in the text field at top of the program.
 2.  Press "Search Term" button. Search may take up to 5 seconds to provide a response (if any).
