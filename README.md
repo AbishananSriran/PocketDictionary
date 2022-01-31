@@ -2,7 +2,7 @@
 # A Simple Pocket Dictionary
 
 ### *What is this about?* 
-   This is a simple pocket dictionary that I created while working with Java. Having worked with APIs in other programming languages, I wanted to make a dictionary application for a long time. This program was created using NetBeans IDE and Java Swing (javax.swing) + GUI Builder.
+   This is a simple pocket dictionary that I created while working with Java. Having worked with web APIs in other programming languages, I wanted to make a dictionary application for a long time. This program was created using NetBeans IDE and Java Swing (javax.swing) + GUI Builder.
  
 ![Pocket Dictionary](https://user-images.githubusercontent.com/83186961/116798355-87920780-aabc-11eb-9967-c42b6261eb22.png)
  
