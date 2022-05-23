@@ -24,7 +24,5 @@
 3.  View the results in the text area below and enjoy!
 
 ### *TO-DO*
-* Work on more efficient methods to store data (using readable files or SQL)
-* Work on formatting quotes to avoid odd search results. (Example: "hello" results in: â€œhelloâ€�)
 * Optimize methods and logic in code.
 * Spice up the application UI!
