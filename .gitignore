@@ -1,5 +1,5 @@
 # Definition Properties file
-src/main/resources/defintion.properties
+defintions.properties
 
 # Compiled class file
 *.class

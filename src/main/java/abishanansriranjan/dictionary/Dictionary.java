@@ -1,23 +1,81 @@
 package abishanansriranjan.dictionary;
 
-import static java.lang.Character.*;
-import java.net.*;
-import java.util.logging.*;
-import java.io.*;
-import java.util.*;
-import org.json.*;
+// java.lang imports
+import static java.lang.Character.isWhitespace;
+
+// java.net imports
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+
+// java.util imports
+import java.util.Properties;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+
+// java.io imports
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
+// org.json imports
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+// java.awt imports
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 /*
  * @author Abishanan
- * @version 0.1.1
+ * @version 0.1.2
  */
 public class Dictionary extends javax.swing.JFrame {
     // Using a Dictionary API.
     private static final String URL_STARTER = "https://api.dictionaryapi.dev/api/v2/entries/en_US/";
-    private static final HashMap<String, String> cache = new HashMap<>();
-    
+    private Properties definitionsCache = null;
+
     public Dictionary() {
         super("Pocket Dictionary");
+
+        // Use Properties to store key value pairs of dictionary definitons
+        definitionsCache = new Properties();
+        new File("src/main/resources").mkdirs();
+        File definitionsFile = new File("src/main/resources/definition.properties");
+        if (!definitionsFile.isFile()){
+            try {
+                definitionsFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+
+        // Load information from definitons file into definitions cache
+        try {
+            definitionsCache.load(new FileReader(definitionsFile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        WindowListener listener = new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                try {
+                    definitionsCache.store(new FileWriter(definitionsFile), "");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        // Listen to when the GUI is closed
+        super.addWindowListener(listener);
+
         initComponents();
     }
     
@@ -34,10 +92,10 @@ public class Dictionary extends javax.swing.JFrame {
     }
     
     // Searches for a result from endpoint for passed String argument "query".
-    private static String searchQuery(String query) {
+    private String searchQuery(String query) {
         // Check if a response is already cached.
-        if (cache.containsKey(query)) {
-            return cache.get(query);
+        if (definitionsCache.containsKey(query)) {
+            return definitionsCache.getProperty(query);
         }
         
         String formatQuery = "";
@@ -89,15 +147,17 @@ public class Dictionary extends javax.swing.JFrame {
                             }
                             if (definition.has("synonyms")) {
                                 JSONArray synonyms = definition.getJSONArray("synonyms");
-                                returnResult += "\nSynonyms: ";
-                                for (int synIndex = 0; synIndex < synonyms.length(); synIndex++) {
-                                    if (synIndex < synonyms.length()-1) {
-                                        returnResult += synonyms.getString(synIndex) + ", ";
-                                    } else {
-                                        returnResult += synonyms.getString(synIndex) + ".";
+                                if (synonyms.length() > 0){
+                                    returnResult += "\nSynonyms: ";
+                                    for (int synIndex = 0; synIndex < synonyms.length(); synIndex++) {
+                                        if (synIndex < synonyms.length()-1) {
+                                            returnResult += synonyms.getString(synIndex) + ", ";
+                                        } else {
+                                            returnResult += synonyms.getString(synIndex) + ".";
+                                        }
                                     }
+                                    returnResult += "\n";
                                 }
-                                returnResult += "\n";
                             }
                         }
                         for (int j = 0; j < 50; j++) {
@@ -108,7 +168,7 @@ public class Dictionary extends javax.swing.JFrame {
                 } else if (connection.getResponseCode() == 404) {
                     returnResult = "Query " + query + " is not a recognizable dictionary term.";
                 } 
-                cache.put(query, returnResult);
+                definitionsCache.setProperty(query, returnResult);
                 connection.disconnect();
             } catch (IOException  ex) {
                 Logger.getLogger(Dictionary.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,10 +180,8 @@ public class Dictionary extends javax.swing.JFrame {
         return returnResult;
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         mainTitle = new javax.swing.JLabel();
         termLbl = new javax.swing.JLabel();
         input = new javax.swing.JTextField();
